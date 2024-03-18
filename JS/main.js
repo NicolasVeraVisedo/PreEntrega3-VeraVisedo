@@ -5,6 +5,7 @@ const tituloPrincipal = document.querySelector("#titulo-principal");
 let botonesAgregar = document.querySelectorAll(".servicio-agregar");
 const numerito = document.querySelector("#numerito");
 const mensajeAgregarCarrito = document.querySelector("#mensaje-carrito");
+const msjsinServicios = document.querySelector("#msjsinServicios");
 
 // Defino un array de servicios con sus detalles
 const servicios = [
@@ -163,44 +164,30 @@ const servicios = [
 
 // Función para cargar los servicios en el contenedor del DOM
 function cargarServicios(serviciosElegidos) {
-  contenedorServicios.innerHTML = ""; // Vacía el contenedor de servicios
-  //validar qué pasa cuando no recibo ningun array
-  let html;
-  for (const el of serviciosElegidos) {
-    // Recorre los servicios y crea una tarjeta para cada uno
-    const { imagen, titulo, descripcion, precio, id } = el;
+  if (serviciosElegidos && serviciosElegidos.length > 0) {
+    // Verifica si el array está vacío o tiene servicios
+    contenedorServicios.innerHTML = ""; // Vacía el contenedor de servicios
+    let html;
+    for (const el of serviciosElegidos) {
+      // Recorre los servicios y crea una tarjeta para cada uno
+      const { imagen, titulo, descripcion, precio, id } = el;
 
-    html = `<div class="card">
-                <img class="servicio-imagen" src="${imagen}" alt="${titulo}">
-                <div class="servicio-detalle">
-                    <h3 class="servicio-titulo">${titulo}</h3>
-                    <p class="servicio-descripcion">${descripcion}</p>
-                    <p class="servicio-precio">$${precio}</p>
-                    <button class="servicio-agregar" id="${id}">Agregar</button>
-                 </div>
-              </div>`;
-    //se la agrego al contenedor
-    contenedorServicios.innerHTML += html;
+      html = `<div class="card">
+                  <img class="servicio-imagen" src="${imagen}" alt="${titulo}">
+                  <div class="servicio-detalle">
+                      <h3 class="servicio-titulo">${titulo}</h3>
+                      <p class="servicio-descripcion">${descripcion}</p>
+                      <p class="servicio-precio">$${precio}</p>
+                      <button class="servicio-agregar" id="${id}">Agregar</button>
+                   </div>
+                </div>`;
+      //se la agrego al contenedor
+      contenedorServicios.innerHTML += html;
+    }
+  } else {
+    msjsinServicios.innerHTML = "No se encontraron servicios disponibles.";
+    msjsinServicios.classList.remove("disable");
   }
-  /* contenedorServicios.innerHTML = "";
-
-    serviciosElegidos.forEach(servicio => {
-        
-        const div = document.createElement("div");
-        div.classList.add("servicio");
-        div.innerHTML = `
-            <img class="servicio-imagen" src="${servicio.imagen}" alt="${servicio.titulo}">
-            <div class="servicio-detalle">
-                <h3 class="servicio-titulo">${servicio.titulo}</h3>
-                <p class="servicio-precio">$${servicio.precio}</p>
-                <p class="servicio-descripcion">${servicio.descripcion}</p>
-                <button class="servicio-agregar" id="${servicio.id}">Agregar</button>
-            </div>
-        `;
-        
-        contenedorServicios.append(div);
-
-    }) */
   actualizarBotonesAgregar(); // Actualiza los botones de agregar al carrito
 }
 
